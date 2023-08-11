@@ -16,14 +16,3 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
-# Use a lightweight Nginx image as the base for serving the app
-FROM nginx:alpine
-
-# Copy the built app from the build stage to the Nginx directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80 to the outside world
-EXPOSE 80
-
-# Start Nginx server when the container starts
-CMD ["nginx", "-g", "daemon off;"]
