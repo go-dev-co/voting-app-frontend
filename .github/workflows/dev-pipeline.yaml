@@ -1,0 +1,36 @@
+name: Build and Test on Dev Branch
+
+on:
+  push:
+    branches:
+      - dev # Trigger on push to the dev branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+       
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Use the Node.js version that matches your project
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React App
+        run: npm run build
+
+    #  - name: Run tests
+     #   run: npm test
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false # Do not push the Docker image
